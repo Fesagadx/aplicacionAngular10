@@ -3,14 +3,16 @@
       <div class="card">
         <div class="card-body">
           <h1 class="text-center">LOGIN</h1>
+          <h5 class="text-center text-danger" *ngIf="mensaje != ''">{{ mensaje }}</h5>
           <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
             <div class="form-group">
-              <label for="text">Usuario</label>
-              <input type="text" class="form-control" formControlName="usuario" />
+              <label for="usuario">Usuario</label>
+              <input type="text" id="usuario" class="form-control" formControlName="usuario" />
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input
+                id="password"
                 type="password"
                 class="form-control"
                 formControlName="password"
