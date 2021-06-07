@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { UsuarioDTO } from 'src/app/model/usuario.model';
-import { CollectionResponse } from 'src/app/model/collection-response.model';
+import { CollectionResponse, Data } from 'src/app/model/collection-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +64,7 @@ export class AuthService {
     return throwError(error);
   }
 
-  listarUsuarios(parametros: any): Observable<CollectionResponse<UsuarioDTO>>{
+  listarUsuarios(parametros: any): Observable <Data<CollectionResponse<UsuarioDTO>>>{
     const params = new HttpParams()
       .set('limit', '' + parametros.limit)
       .set('page', '' + parametros.page);
@@ -73,7 +73,7 @@ export class AuthService {
 
     return this.http.get(HOSTAPITEST + 'usuarios', {params: params})
     .pipe(
-      map((response: Response) => <any>response as CollectionResponse<UsuarioDTO>),
+      map((response: Response) => <any>response as Data<CollectionResponse<UsuarioDTO>>),
       catchError(this.handleError)
     );
 

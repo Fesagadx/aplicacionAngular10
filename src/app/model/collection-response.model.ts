@@ -1,3 +1,9 @@
+export class Data<CollectionResponse>{
+    data:CollectionResponse;
+    codigo:number;
+    mensaje:string;
+}
+
 export class CollectionResponse<T> {
     data: T[] = [];
     lastPage:number;
