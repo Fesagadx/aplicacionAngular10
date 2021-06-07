@@ -12,8 +12,9 @@
             <th class="text-center">Nombre</th>
             <th class="text-center">Apellidos</th>
             <th class="text-center">Usuario</th>
-            <th class="text-center">Remove</th>
+            <th class="text-center">Acciones</th>
           </tr>
+          <!--
           <tr *ngFor="let person of personList; let id = index">
             <td>
               <span (keyup)="changeValue(id, 'name', $event)" (blur)="updateList(id, 'name', $event)" contenteditable="true">{{person.name}}</span>
@@ -30,6 +31,24 @@
               </span>
             </td>
           </tr>
+          -->
+          <tr *ngFor="let user of listaUsuarios; let id = index">
+            <td>
+              <span contenteditable="true">{{user.nombres}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{user.apellidos}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{user.usuario}}</span>
+            </td>
+            <td>
+              <span class="table-remove">
+                <button type="button">Eliminar</button>
+              </span>
+            </td>
+          </tr>
+
         </table>
       </div>
     </div>

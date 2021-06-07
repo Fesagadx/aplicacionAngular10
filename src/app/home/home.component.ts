@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth/services/auth.service';
+import { UsuarioDTO } from '../model/usuario.model';
 
 @Component({
   selector: 'app-home',
@@ -7,12 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  listaUsuarios: UsuarioDTO[] = [];
 
-  ngOnInit(): void {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
+
   }
 
-  editField: string;
+  ngOnInit(){
+    this.listarUsuarios();
+  }
+
+    editField: string;
+
     personList: Array<any> = [
       { id: 1, name: 'Aurelia Vega', age: 30, companyName: 'Deepends', country: 'Spain', city: 'Madrid' },
       { id: 2, name: 'Guerra Cortez', age: 45, companyName: 'Insectus', country: 'USA', city: 'San Francisco' },
@@ -40,15 +52,32 @@ export class HomeComponent implements OnInit {
     }
 
     add() {
+      this.router.navigate(['/register']);
+      /*
       if (this.awaitingPersonList.length > 0) {
         const person = this.awaitingPersonList[0];
         this.personList.push(person);
         this.awaitingPersonList.splice(0, 1);
       }
+      */
     }
 
     changeValue(id: number, property: string, event: any) {
       this.editField = event.target.textContent;
     }
+  
 
+  listarUsuarios(){
+    const params: any={
+      limit: 20,
+      page: 1
+    };
+
+    this.authService.listarUsuarios(params)
+      .subscribe(resp => {
+        console.log('resp ', resp);
+        this.listaUsuarios=resp.data.data;
+        console.log('listaUsuarios ', this.listaUsuarios);
+      });
+  }
 }

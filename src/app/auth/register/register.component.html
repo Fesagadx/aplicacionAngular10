@@ -3,14 +3,14 @@
       <div class="card">
         <div class="card-body">
           <h1 class="text-center">REGISTER</h1>
-          <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          <form [formGroup]="registerForm" (ngSubmit)="registrarUsuario()">
             <div class="form-group">
               <label for="text">Nombre</label>
-              <input type="text" class="form-control" formControlName="nombre" />
+              <input type="text" class="form-control" formControlName="nombres" />
             </div>
             <div class="form-group">
                 <label for="text">Apellidos</label>
-                <input type="text" class="form-control" formControlName="apellido" />
+                <input type="text" class="form-control" formControlName="apellidos" />
             </div>
             <div class="form-group">
                 <label for="text">Usuario</label>

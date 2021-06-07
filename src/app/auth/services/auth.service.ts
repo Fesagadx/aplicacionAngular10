@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HOSTAPITEST } from '../../@constants/path';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { UsuarioDTO } from 'src/app/model/usuario.model';
+import { CollectionResponse } from 'src/app/model/collection-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +37,18 @@ export class AuthService {
     }
   }
 
-  register() {
+  register(nombres:string,apellidos:string, usuario:string, password:string):Observable<any> {
+
+    const url = HOSTAPITEST + 'usuarios';
+    return this.http
+      .post(url, {nombres, apellidos,usuario,password})
+      .pipe(
+        map((response: any) => {
+          
+          return response;
+        }),
+        catchError(this.handleError)
+      );
 
   }
 
@@ -49,5 +62,28 @@ export class AuthService {
 
   handleError(error: any): Observable<any> {
     return throwError(error);
+  }
+
+  listarUsuarios(parametros: any): Observable<CollectionResponse<UsuarioDTO>>{
+    const params = new HttpParams()
+      .set('limit', '' + parametros.limit)
+      .set('page', '' + parametros.page);
+    console.log("params");
+    console.log(params);
+
+    return this.http.get(HOSTAPITEST + 'usuarios', {params: params})
+    .pipe(
+      map((response: Response) => <any>response as CollectionResponse<UsuarioDTO>),
+      catchError(this.handleError)
+    );
+
+  }
+
+  actualizarUsuario(){
+
+  }
+
+  eliminarUsuario(){
+
   }
 }
