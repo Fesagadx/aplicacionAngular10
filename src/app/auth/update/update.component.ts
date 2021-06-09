@@ -17,9 +17,9 @@ export class UpdateComponent implements OnInit {
     password: new FormControl('')
   });
 
-  nom:string;
-  ape:string;
-  usu:string;
+  nom:any;
+  ape:any;
+  usu:any;
   datoUsuario:any;
   usuarioSel:any;
 
@@ -30,27 +30,28 @@ export class UpdateComponent implements OnInit {
 
     this.datoUsuario = JSON.parse(localStorage.getItem('usuSel'));
     console.log(this.datoUsuario);
-    this.nom=this.datoUsuario.nombres;
-    this.ape=this.datoUsuario.apellidos;
-    this.usu=this.datoUsuario.usuario;
-
-    console.log(this.nom);
-    console.log(this.ape);
-    console.log(this.usu);
 
     this.usuarioSel={
       id:0,
-      nombres:"",
-      apellidos:"",
-      usuario:"",
+      nombres:this.datoUsuario.nombres,
+      apellidos:this.datoUsuario.apellidos,
+      usuario:this.datoUsuario.usuario,
       password:"",
       created_at:"",
       updated_at:"",
     }
 
+    this.nom=this.usuarioSel.nombres;
+    this.ape=this.usuarioSel.apellidos;
+    this.usu=this.usuarioSel.usuario;
+
+    console.log(this.nom);
+    console.log(this.ape);
+    console.log(this.usu);
+
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     
   }
 
@@ -69,6 +70,7 @@ export class UpdateComponent implements OnInit {
     this.authService.actualizarUsuario(this.usuarioSel).subscribe(
       data =>{
         console.log("data",data)
+        this.router.navigate(['/home']);
       }
     );
   }

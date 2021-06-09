@@ -80,7 +80,7 @@ export class AuthService {
   }
 
   actualizarUsuario(usuario:UsuarioDTO): Observable<UsuarioDTO>{
-    const url = HOSTAPITEST + 'usuarios/:'+usuario.id;
+    const url = HOSTAPITEST + 'usuarios/'+usuario.id;
     console.log("url",url);
     console.log("usuario",usuario);
       return this.http.put(url,usuario)
@@ -93,7 +93,7 @@ export class AuthService {
   }
 
   eliminarUsuario(usuario:UsuarioDTO): Observable<UsuarioDTO>{
-    const url = HOSTAPITEST + 'usuarios/:'+usuario.id;
+    const url = HOSTAPITEST + 'usuarios/'+usuario.id;
     console.log("url",url);
     console.log("usuario",usuario);
     let Options ={

@@ -6,15 +6,15 @@
           <form [formGroup]="actualizarForm" (ngSubmit)="actualizar()">
             <div class="form-group">
               <label for="text">Nombre</label>
-              <input type="text" class="form-control" formControlName="nombres" placeholder={{nom}} value={{nom}}/>
+              <input type="text" class="form-control" formControlName="nombres" value={{nom}}/>
             </div>
             <div class="form-group">
                 <label for="text">Apellidos</label>
-                <input type="text" class="form-control" formControlName="apellidos" placeholder={{ape}}/>
+                <input type="text" class="form-control" formControlName="apellidos" value={{ape}}/>
             </div>
             <div class="form-group">
                 <label for="text">Usuario</label>
-                <input type="text" class="form-control" formControlName="usuario" placeholder={{usu}}/>
+                <input type="text" class="form-control" formControlName="usuario" value={{usu}}/>
             </div>
             <div class="form-group">
               <label for="password">Password</label>

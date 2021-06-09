@@ -154,6 +154,7 @@ export class HomeComponent implements OnInit {
     this.authService.eliminarUsuario(this.usuarioSel).subscribe(
       data =>{
         console.log("data",data)
+        this.listarUsuarios();
       }
     );
   }
