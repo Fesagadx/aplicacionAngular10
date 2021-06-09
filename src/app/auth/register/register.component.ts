@@ -33,6 +33,8 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.registerForm.value.nombres, this.registerForm.value.apellidos,this.registerForm.value.usuario, this.registerForm.value.password)
       .subscribe(resp => {
       console.log('registro ', resp);
+      this.router.navigate(['/home']);
+
     });
   }
 
