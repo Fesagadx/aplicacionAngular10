@@ -7,7 +7,7 @@
             <div>REGISTRAR</div>
           </a>
         </span>
-        <table class="table table-bordered table-responsive-md table-striped text-center">
+        <table class="table table-bordered table-responsive-md table-striped text-center" >
           <tr>
             <th class="text-center">Nombre</th>
             <th class="text-center">Apellidos</th>
@@ -32,24 +32,35 @@
             </td>
           </tr>
           -->
-          <tr *ngFor="let user of listaUsuarios; let id = index">
+          <tr *ngFor="let user of listaUsuarios ; let id = index">
             <td>
-              <span contenteditable="true">{{user.nombres}}</span>
+              <span>{{user.nombres}}</span>
             </td>
             <td>
-              <span contenteditable="true" >{{user.apellidos}}</span>
+              <span>{{user.apellidos}}</span>
             </td>
             <td>
-              <span contenteditable="true" >{{user.usuario}}</span>
+              <span>{{user.usuario}}</span>
             </td>
             <td>
               <span class="table-remove">
-                <button type="button">Eliminar</button>
+                <button type="button" (click)="update(id)">Editar</button>
+              </span>
+              <span class="table-remove">
+                <button type="button" (click)="deleteUsuario(id)" >Eliminar</button>
               </span>
             </td>
           </tr>
-
         </table>
+        <div>
+          <ngb-pagination class="d-flex" 
+                  [collectionSize]="numElementos" 
+                  [(page)]="page" 
+                  [maxSize]="10" 
+                  [directionLinks]="true"
+                  (pageChange)="listarUsuarios()">
+          </ngb-pagination>
+        </div>
       </div>
     </div>
   </div>

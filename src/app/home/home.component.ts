@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 import { UsuarioDTO } from '../model/usuario.model';
+import { NgbModal, NgbPagination} from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
@@ -11,12 +14,39 @@ import { UsuarioDTO } from '../model/usuario.model';
 export class HomeComponent implements OnInit {
 
   listaUsuarios: UsuarioDTO[] = [];
+  usuarioSel: any;
+  miUsuario:number;
+  usuSel:number;
+  usuario: any;
+  numElementos:number;
+  page =1;
+  limit=10;
+
+  nom:string;
+  ape:string;
+  usu:string;
+  con:string;
+  editarForm: FormGroup;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
 
+    this.usuarioSel={
+      id:0,
+      nombres:"",
+      apellidos:"",
+      usuario:"",
+      password:"",
+      created_at:"",
+      updated_at:"",
+    }
+
+    this.miUsuario=0;
+    this.usuSel=0;
+    
   }
 
   ngOnInit(){
@@ -61,6 +91,22 @@ export class HomeComponent implements OnInit {
       }
       */
     }
+    
+    update(idUsuario:number){
+      this.miUsuario =idUsuario;
+      this.usuSel=this.listaUsuarios[this.miUsuario].id;
+      this.usuarioSel={
+        id:this.listaUsuarios[this.miUsuario].id,
+        nombres:this.listaUsuarios[this.miUsuario].nombres,
+        apellidos:this.listaUsuarios[this.miUsuario].apellidos,
+        usuario:this.listaUsuarios[this.miUsuario].usuario,
+        created_at:this.listaUsuarios[this.miUsuario].created_at,
+        updated_at:this.listaUsuarios[this.miUsuario].updated_at,
+
+      };
+      localStorage.setItem("usuSel", JSON.stringify(this.usuarioSel));
+      this.router.navigate(['/update']);
+    }
 
     changeValue(id: number, property: string, event: any) {
       this.editField = event.target.textContent;
@@ -69,15 +115,46 @@ export class HomeComponent implements OnInit {
 
   listarUsuarios(){
     const params: any={
-      limit: 20,
-      page: 1
+      limit: 10,
+      page: this.page
     };
 
     this.authService.listarUsuarios(params)
       .subscribe(resp => {
         console.log('resp ', resp);
         this.listaUsuarios=resp.data.data;
+        this.numElementos = resp.data.total;
+        
+        if(this.numElementos % 10==0){
+          this.numElementos = Math.trunc(resp.data.total/10)*10;
+        }else{
+          this.numElementos = Math.trunc(resp.data.total/10)*10+10;
+        }
+        
+
         console.log('listaUsuarios ', this.listaUsuarios);
       });
+  }
+
+  deleteUsuario(idUsuario:number){
+    this.miUsuario =idUsuario;
+    this.usuSel=this.listaUsuarios[this.miUsuario].id;
+
+    this.usuarioSel={
+      id:this.listaUsuarios[this.miUsuario].id,
+      nombres:this.listaUsuarios[this.miUsuario].nombres,
+      apellidos:this.listaUsuarios[this.miUsuario].apellidos,
+      usuario:this.listaUsuarios[this.miUsuario].usuario,
+      created_at:this.listaUsuarios[this.miUsuario].created_at,
+      updated_at:this.listaUsuarios[this.miUsuario].updated_at,
+
+    };
+
+    console.log('id',this.usuSel);
+    this.authService.eliminarUsuario(this.usuarioSel).subscribe(
+      data =>{
+        console.log("data",data)
+      }
+    );
   }
 }

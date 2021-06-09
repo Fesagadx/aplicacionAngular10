@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HOSTAPITEST } from '../../@constants/path';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { UsuarioDTO } from 'src/app/model/usuario.model';
@@ -79,11 +79,31 @@ export class AuthService {
 
   }
 
-  actualizarUsuario(){
-
+  actualizarUsuario(usuario:UsuarioDTO): Observable<UsuarioDTO>{
+    const url = HOSTAPITEST + 'usuarios/:'+usuario.id;
+    console.log("url",url);
+    console.log("usuario",usuario);
+      return this.http.put(url,usuario)
+      .pipe(
+        map((response: Response) => response,
+        console.log("responseActualizar",Response),
+        ),
+        catchError(this.handleError)
+      );
   }
 
-  eliminarUsuario(){
-
+  eliminarUsuario(usuario:UsuarioDTO): Observable<UsuarioDTO>{
+    const url = HOSTAPITEST + 'usuarios/:'+usuario.id;
+    console.log("url",url);
+    console.log("usuario",usuario);
+    let Options ={
+      headers:new HttpHeaders({
+        'Content-type': 'application/json'
+      }),
+    }
+    return this.http.delete(url,Options)
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 }
