@@ -3,17 +3,17 @@
     <div class="card-body">
       <div id="table" class="table-editable">
         <span class="table-add float-right mb-3 mr-2">
-          <a class="text-success" (click)="add()">
-            <div>REGISTRAR</div>
-          </a>
+          <a class="btn btn-primary" (click)="add()">REGISTRAR</a>
         </span>
         <table class="table table-bordered table-responsive-md table-striped text-center" >
+          <thead>
           <tr>
             <th class="text-center">Nombre</th>
             <th class="text-center">Apellidos</th>
             <th class="text-center">Usuario</th>
             <th class="text-center">Acciones</th>
           </tr>
+          </thead>
           <!--
           <tr *ngFor="let person of personList; let id = index">
             <td>
@@ -32,6 +32,7 @@
             </td>
           </tr>
           -->
+          <tbody>
           <tr *ngFor="let user of listaUsuarios ; let id = index">
             <td>
               <span>{{user.nombres}}</span>
@@ -43,20 +44,17 @@
               <span>{{user.usuario}}</span>
             </td>
             <td>
-              <span class="table-remove">
-                <button type="button" (click)="update(id)">Editar</button>
-              </span>
-              <span class="table-remove">
-                <button type="button" (click)="deleteUsuario(id)" >Eliminar</button>
-              </span>
+              <button class="btn btn-success m-1" type="button" (click)="update(id)">Editar</button>
+              <button class="btn btn-danger m-1" type="button" (click)="deleteUsuario(id)">Eliminar</button>
             </td>
           </tr>
+          </tbody>
         </table>
-        <div>
-          <ngb-pagination class="d-flex" 
-                  [collectionSize]="numElementos" 
-                  [(page)]="page" 
-                  [maxSize]="10" 
+        <div class="d-flex justify-content-center">
+          <ngb-pagination class="d-flex"
+                  [collectionSize]="numElementos"
+                  [(page)]="page"
+                  [maxSize]="10"
                   [directionLinks]="true"
                   (pageChange)="listarUsuarios()">
           </ngb-pagination>
